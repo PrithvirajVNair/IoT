@@ -3,6 +3,11 @@
 A full-stack dashboard for monitoring factory floor machines (temperature, vibration, and
 operating status) and acknowledging faults, built as a Full Stack Developer (Fresher) machine test.
 
+## Live Demo
+
+- **Frontend:** https://io-t-omega.vercel.app/
+- **Backend API:** https://iot-nfvr.onrender.com
+
 ## Tech Stack
 
 **Backend:** Node.js, Express, MongoDB (Mongoose)
@@ -48,11 +53,13 @@ DATABASE=<your-mongodb-connection-string>
 PORT=3000
 ```
 
-Seed the database with sample machines (run once):
+Seed the database with sample machines (run once). `backend/data/machines.json` contains the
+starting sample data — import it into your `machines` collection using `mongosh`, MongoDB
+Compass, or `mongoimport`:
 
 ```bash
-# if a seed script isn't present, insert backend/data/machines.json
-# into your `machines` collection via mongosh, Compass, or a one-off script
+mongoimport --uri "<your-mongodb-connection-string>" \
+  --collection machines --file backend/data/machines.json --jsonArray
 ```
 
 Start the server:
@@ -84,6 +91,9 @@ npm run dev
 The app will be running at `http://localhost:5173` (default Vite port) and expects the backend
 to be reachable at `http://localhost:3000` (configured in `src/services/serverURL.js`).
 
+> **Note:** For the deployed version, `serverURL.js` points to the live backend URL instead of
+> `localhost`, and the backend's CORS config is set to allow the deployed frontend origin.
+
 ## Features
 
 - Dashboard with color-coded machine status cards (green = running, yellow = idle, red = fault)
@@ -99,6 +109,6 @@ to be reachable at `http://localhost:3000` (configured in `src/services/serverUR
 
 1. Replace fixed-interval polling with WebSockets (Socket.io) for true real-time sensor updates instead of periodic refetching.
 2. Add backend simulation of live sensor drift (temperature/vibration) so polling reflects genuinely changing data, not static values.
-3. Add automated tests (Jest/Supertest for the API, React Testing Library for components).
-4. Add centralized Express error-handling middleware instead of repeating try/catch per controller.
-   
+3. Add centralized Express error-handling middleware instead of repeating try/catch per controller.
+4. Add rate limiting on the API to guard against abuse in a production setting.
+5. Spend more time polishing the UI/UX design.
