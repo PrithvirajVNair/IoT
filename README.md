@@ -101,5 +101,4 @@ to be reachable at `http://localhost:3000` (configured in `src/services/serverUR
 2. Add backend simulation of live sensor drift (temperature/vibration) so polling reflects genuinely changing data, not static values.
 3. Add automated tests (Jest/Supertest for the API, React Testing Library for components).
 4. Add centralized Express error-handling middleware instead of repeating try/catch per controller.
-5. Deploy the app (backend to Render/Railway, frontend to Vercel) so it can be tested live without local setup.
    
